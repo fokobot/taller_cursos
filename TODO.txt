@@ -1,0 +1,6 @@
+- *Listar Cursos* -> *Detalle Curso* -> Detalle profesor
+			-> *Lista estudiantes*   ->  Agregar estudiante
+					-> Detalle Estudiante
+
+- Todos los estudiantes -> Detalle estudiante
+- Todos los profesores -> Detalle profesor

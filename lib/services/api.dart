@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:taller_cursos/data/course.dart';
 import 'package:taller_cursos/data/course_detail.dart';
 import 'package:taller_cursos/data/person.dart';
+import 'package:taller_cursos/data/person_detail.dart';
 import 'package:taller_cursos/data/user.dart';
 
 class Api {
@@ -103,10 +104,8 @@ class Api {
     print('${response.statusCode}');
     print('$response');
     if (response.statusCode == 200) {
-      // print('${response.body}');
       return Course.fromJson(json.decode(response.body));
     } else {
-      //throw Exception('Failed to register user');
       Map<String, dynamic> body = json.decode(response.body);
       String error = body['error'];
       print('error  $error');
@@ -126,8 +125,6 @@ class Api {
         HttpHeaders.authorizationHeader: "Bearer " + token,
       },
     );
-    print(
-        'showCoursesService username $username token $token => ${response.statusCode}');
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       //return UserInfo.fromJson(json.decode(response.body));
@@ -136,7 +133,6 @@ class Api {
         //print('course $i');
         studentsList.add(Person.fromJson(i));
       }
-      print('showCoursesService length ${studentsList.length}');
       return studentsList;
     } else {
       //Map<String, dynamic> body = json.decode(response.body);
@@ -145,4 +141,24 @@ class Api {
       return Future.error(response.statusCode.toString());
     }
   }
+
+  Future<PersonDetail> getProfessor(String username, String token, int professorId) async {
+    Uri uri = Uri.https(
+      "movil-api.herokuapp.com",
+      '$username/professors/$professorId',
+    );
+    final http.Response response = await http.get(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer " + token,
+      },
+    );
+    if (response.statusCode == 200) {
+      return PersonDetail.fromJson(json.decode(response.body));
+    } else {
+      return Future.error(response.statusCode.toString());
+    }
+  }
+
 }
