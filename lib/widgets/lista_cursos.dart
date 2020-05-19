@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
-import 'package:taller_cursos/viewmodels/auth_provider.dart';
 import 'package:taller_cursos/viewmodels/home_model.dart';
+
+import '../models/user.dart';
 
 class ListaCursos extends StatelessWidget {
   @override
@@ -17,8 +18,8 @@ class ListaCursos extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () {
-                    Provider.of<AuthProvider>(context, listen: false)
-                        .setLogOut();
+                    Provider.of<UserModel>(context, listen: false)
+                        .signOut();
                   },
                 ),
               ],
@@ -44,12 +45,12 @@ class ListaCursos extends StatelessWidget {
 
   void getData(BuildContext context, HomeModel model) async {
     model
-        .getCourses(Provider.of<AuthProvider>(context).username,
-            Provider.of<AuthProvider>(context).token)
+        .getCourses(Provider.of<UserModel>(context).username,
+            Provider.of<UserModel>(context).token)
         .catchError((error) async {
       print("getCourses got error: " + error);
       await _buildDialog(context, 'Alert', 'Need to login');
-      Provider.of<AuthProvider>(context, listen: false).setLogOut();
+      Provider.of<UserModel>(context, listen: false).signOut();
     });
   }
 
@@ -73,7 +74,7 @@ class ListaCursos extends StatelessWidget {
     } catch (err) {
       print('upsss ${err.toString()}');
       await _buildDialog(context, 'Alert', 'Need to login');
-      Provider.of<AuthProvider>(context, listen: false).setLogOut();
+      Provider.of<UserModel>(context, listen: false).signOut();
     }
   }
 
