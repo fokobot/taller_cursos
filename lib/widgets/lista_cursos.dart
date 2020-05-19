@@ -6,6 +6,7 @@ import 'package:taller_cursos/data/course.dart';
 import 'package:taller_cursos/viewmodels/home_model.dart';
 
 import '../models/user.dart';
+import 'course_detail_view.dart';
 
 class ListaCursos extends StatelessWidget {
   @override
@@ -35,7 +36,7 @@ class ListaCursos extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               Expanded(
-                                child:  _list(model.courses)
+                                child:  _list(context, model.courses)
                               ),
                             ],
                           ))));
@@ -52,12 +53,13 @@ class ListaCursos extends StatelessWidget {
     });
   }
 
-  // void getDetail(BuildContext context, int courseId) async {
-  //   Navigator.of(context).push(
-  //     MaterialPageRoute(
-  //         builder: (context) => CourseDetailView(courseId: courseId)),
-  //   );
-  // }
+  void getDetail(BuildContext context, int courseId) async {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => CourseDetailView(courseId: courseId)
+      ),
+    );
+  }
 
   Widget floating(BuildContext context, HomeModel model) {
     return FloatingActionButton(
@@ -95,19 +97,22 @@ class ListaCursos extends StatelessWidget {
     );
   }
 
-  Widget _list(items) {
+  Widget _list(BuildContext context, List<Course> items) {
     return ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, posicion) {
         var element = items[posicion];
-        return _item(element);
+        return _item(context, element);
       },
     );
   }
 
-  Widget _item(Course element){
+  Widget _item(BuildContext context, Course element){
     return Card(
       child: InkWell(
+        onTap: () {
+          getDetail(context, element.id);
+        },
         child: Container(
           child: ListTile(
             title: Text(element.name),
