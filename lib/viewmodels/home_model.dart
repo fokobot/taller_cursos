@@ -7,7 +7,7 @@ import '../locator.dart';
 class HomeModel extends BaseModel {
   CourseService _couseService = locator<CourseService>();
 
-  List<Course> get courses => _couseService.couses;
+  List<Course> get courses => _couseService.courses;
   bool dataAvailable = true;
 
   Future getCourses(String user, String token) async {

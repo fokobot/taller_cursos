@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
 import 'package:taller_cursos/viewmodels/course_detail_model.dart';
+import 'package:taller_cursos/widgets/students_course_view.dart';
 
 import '../models/user.dart';
 
@@ -28,8 +29,19 @@ class CourseDetailView extends StatelessWidget {
                     child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      Center(child: Text('${model.courseDetail.name}'))
+                      Center(child: Text('${model.courseDetail.name}')),
+                      FlatButton(
+                        child: Text("Estudiantes"),
+                        onPressed: () => {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => StudentsCourseView(courseId: courseId)
+                            ),
+                          )
+                        },
+                      )
                     ],
                   ))));
   }
+
 }

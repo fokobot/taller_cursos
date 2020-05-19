@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:taller_cursos/data/course.dart';
 import 'package:taller_cursos/data/course_detail.dart';
+import 'package:taller_cursos/data/person.dart';
 import 'package:taller_cursos/data/user.dart';
-
 
 class Api {
   static const String baseUrl = 'https://movil-api.herokuapp.com';
@@ -65,10 +65,11 @@ class Api {
     }
   }
 
-Future<CourseDetail> getCourse(String username, String token, int courseId) async {
+  Future<CourseDetail> getCourse(
+      String username, String token, int courseId) async {
     Uri uri = Uri.https(
       "movil-api.herokuapp.com",
-      '$username/courses/$courseId', 
+      '$username/courses/$courseId',
     );
     final http.Response response = await http.get(
       uri,
@@ -79,7 +80,7 @@ Future<CourseDetail> getCourse(String username, String token, int courseId) asyn
     );
     print(
         'getCourse username $username token $token => ${response.statusCode}');
-        print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       return CourseDetail.fromJson(json.decode(response.body));
     } else {
@@ -111,5 +112,37 @@ Future<CourseDetail> getCourse(String username, String token, int courseId) asyn
       print('error  $error');
       return Future.error(error);
     }
-  }  
+  }
+
+  Future<List<Person>> getStudents(String username, String token) async {
+    Uri uri = Uri.https(
+      "movil-api.herokuapp.com",
+      '$username/students',
+    );
+    final http.Response response = await http.get(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer " + token,
+      },
+    );
+    print(
+        'showCoursesService username $username token $token => ${response.statusCode}');
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      //return UserInfo.fromJson(json.decode(response.body));
+      List<Person> studentsList = [];
+      for (Map i in data) {
+        //print('course $i');
+        studentsList.add(Person.fromJson(i));
+      }
+      print('showCoursesService length ${studentsList.length}');
+      return studentsList;
+    } else {
+      //Map<String, dynamic> body = json.decode(response.body);
+      //String error = body['error'];
+      //print('error  $error');
+      return Future.error(response.statusCode.toString());
+    }
+  }
 }
