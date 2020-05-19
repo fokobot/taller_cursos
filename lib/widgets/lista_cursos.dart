@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
+import 'package:taller_cursos/data/course.dart';
 import 'package:taller_cursos/viewmodels/home_model.dart';
 
 import '../models/user.dart';
@@ -13,7 +14,7 @@ class ListaCursos extends StatelessWidget {
         onModelReady: (model) => getData(context, model),
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
-              title: Text("Course list"),
+              title: Text("Lista de Cursos"),
               actions: <Widget>[
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
@@ -33,12 +34,9 @@ class ListaCursos extends StatelessWidget {
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
-                              Center(child: Text('${model.courses.length}')),
-                              FlatButton(
-                                  child: Text('get Detail'),
-                                  onPressed: () => print("Hola mundo")
-                                  //getDetail(context, model.courses[0].id)
-                                  )
+                              Expanded(
+                                child:  _list(model.courses)
+                              ),
                             ],
                           ))));
   }
@@ -96,4 +94,28 @@ class ListaCursos extends StatelessWidget {
       context: context,
     );
   }
+
+  Widget _list(items) {
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, posicion) {
+        var element = items[posicion];
+        return _item(element);
+      },
+    );
+  }
+
+  Widget _item(Course element){
+    return Card(
+      child: InkWell(
+        child: Container(
+          child: ListTile(
+            title: Text(element.name),
+            subtitle: Text("Profesor: ${element.professor}\n# de estudiantes: ${element.students}"),
+          ),
+        ),
+      ),
+    );
+  }
+  
 }
