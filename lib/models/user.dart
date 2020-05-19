@@ -58,7 +58,7 @@ class UserModel extends ChangeNotifier {
     notifyListeners();
   }*/
 
-  Future<UserModel> verifyStatus() async {
+  void verifyStatus() async {
     // petición
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');

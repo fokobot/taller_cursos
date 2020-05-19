@@ -1,6 +1,6 @@
 import 'package:taller_cursos/models/user.dart';
 import 'package:taller_cursos/forms/login.dart';
-import 'package:taller_cursos/widgets/profile.dart';
+import 'package:taller_cursos/widgets/lista_cursos.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,7 @@ class MyHome extends StatelessWidget {
           ),
           body: Center(
               child: Consumer<UserModel>(builder: (context, user, child) {
-            return user.status ? Profile() : Login();
+            return user.status ? ListaCursos() : Login();
           })
         )
       )
