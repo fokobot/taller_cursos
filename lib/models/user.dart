@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+enum UserStatus { NotLogged, Loging, Logged }
+
 class UserModel extends ChangeNotifier {
   String token;
   String username;
   String name;
   bool status = false;
+  bool logging = false;
 
   UserModel({this.token, this.username, this.name});
 
@@ -21,8 +24,13 @@ class UserModel extends ChangeNotifier {
       name: json['name'],
     );
   }
+  void changeLogging() {
+    this.logging = !this.logging;
+    notifyListeners();
+  }
 
-  Future<UserModel> signIn(String email, String password) async {
+  Future<UserModel> signIn(
+      String email, String password, bool rememberme) async {
     final http.Response response = await http.post(
       'https://movil-api.herokuapp.com/signin',
       headers: <String, String>{
@@ -41,6 +49,15 @@ class UserModel extends ChangeNotifier {
       this.name = user.name;
       this.username = user.username;
       this.status = true;
+      final prefs = await SharedPreferences.getInstance();
+      if (rememberme) {
+        prefs.setString('email', email);
+        prefs.setString('password', password);
+      } else {
+        prefs.setString('email', "");
+        prefs.setString('password', "");
+      }
+
       return user;
     } else {
       print("signIn failed");
@@ -48,15 +65,6 @@ class UserModel extends ChangeNotifier {
       //throw Exception(response.body);
     }
   }
-
-  /*Future<void> verifyStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-    this.status = prefs.getBool('status') ?? false;
-    this.name = prefs.getString('name');
-    this.username = prefs.getString('username');
-    this.token = prefs.getString('token');
-    notifyListeners();
-  }*/
 
   void verifyStatus() async {
     // petición
@@ -115,6 +123,7 @@ class UserModel extends ChangeNotifier {
     prefs.setString('username', this.username);
     prefs.setString('name', this.name);
     prefs.setBool('status', this.status);
+    this.logging = false;
     notifyListeners();
   }
 
@@ -125,6 +134,9 @@ class UserModel extends ChangeNotifier {
     this.token = "";
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('status', this.status);
+    prefs.setString('name', this.name);
+    prefs.setString('username', this.username);
+    prefs.setString('token', this.token);
     notifyListeners();
   }
 }

@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:developer' as developer;
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taller_cursos/forms/register.dart';
 import 'package:taller_cursos/models/user.dart';
 import 'package:taller_cursos/widgets/customdialog.dart';
@@ -32,12 +34,18 @@ class _StatefulWrapperState extends State<StatefulWrapper> {
   }
 }
 
-class Login extends StatelessWidget {
-  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  final controllerEmail = new TextEditingController();
-  final controllerPassword = new TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+class Login extends StatefulWidget {
+  @override
+  _Login createState() => _Login();
+}
 
+class _Login extends State<Login> {
+  bool _value2 = false;
+  final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  var controllerEmail = new TextEditingController();
+  var controllerPassword = new TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  void _value2Changed(bool value) => setState(() => _value2 = value);
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
@@ -81,9 +89,10 @@ class Login extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           if (_formKey.currentState.validate()) {
+            Provider.of<UserModel>(context, listen: false).changeLogging();
             Provider.of<UserModel>(context, listen: false)
                 .signIn(
-                    controllerEmail.value.text, controllerPassword.value.text)
+                    controllerEmail.value.text, controllerPassword.value.text, _value2)
                 .then((user) {
               Provider.of<UserModel>(context, listen: false)
                   .setLoggedIn(user.username);
@@ -93,6 +102,7 @@ class Login extends StatelessWidget {
                 buttonText: "Okay",
               ); //_buildDialog(context, "Exito!", "Done");
             }).catchError((error) {
+              Provider.of<UserModel>(context, listen: false).changeLogging();
               developer.log('Error de Login', name: 'DEBUG');
               final failedLogin = SnackBar(
                 content: Text('Error Login'),
@@ -121,10 +131,17 @@ class Login extends StatelessWidget {
                 color: Colors.white, fontWeight: FontWeight.bold)),
       ),
     );
-    
+    const spinkit = SpinKitSquareCircle(
+      color: Colors.blue,
+      size: 50.0,
+    );
     return StatefulWrapper(
-      onInit: () =>
-          Provider.of<UserModel>(context, listen: false).verifyStatus(),
+      onInit: () async {
+        final prefs = await SharedPreferences.getInstance();
+        controllerEmail.text = prefs.getString('email');
+        controllerPassword.text = prefs.getString('password');
+        Provider.of<UserModel>(context, listen: false).verifyStatus();
+      },
       child: Scaffold(
         body: Center(
           child: Container(
@@ -152,7 +169,17 @@ class Login extends StatelessWidget {
                       SizedBox(
                         height: 35.0,
                       ),
-                      loginButon,
+                      CheckboxListTile(
+                        value: _value2,
+                        onChanged: _value2Changed,
+                        title: new Text('Recordarme'),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                      //loginButon,
+                      //spinkit,
+                      Consumer<UserModel>(builder: (context, user, child) {
+                        return user.logging ? spinkit : loginButon;
+                      }),
                       SizedBox(
                         height: 15.0,
                       ),
