@@ -7,7 +7,7 @@ class CourseDetail extends StatelessWidget {
   final String coursename;
   final int courseId;
   final int professorId;
-  CourseDetail(this.coursename, this.courseId, this.professorId);
+  CourseDetail({this.coursename, this.courseId, this.professorId});
   @override
   Widget build(BuildContext context) {
     return new Scaffold(

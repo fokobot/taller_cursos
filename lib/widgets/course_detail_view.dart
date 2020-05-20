@@ -24,7 +24,9 @@ class CourseDetailView extends StatelessWidget {
             ),
             body: model.state == ViewState.Busy
                 ? Center(child: CircularProgressIndicator())
-                : CourseDetail(model.courseDetail.name, courseId,
-                    model.courseDetail.professor.id)));
+                : CourseDetail(
+                    coursename: model.courseDetail.name,
+                    courseId: courseId,
+                    professorId: model.courseDetail.professor.id)));
   }
 }

@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:taller_cursos/data/person_detail.dart';
 
 class ProfilePage extends StatelessWidget {
-  
   final PersonDetail _personDetail;
 
   ProfilePage(this._personDetail);
-      
+
   TextStyle _style() {
     return TextStyle(fontWeight: FontWeight.bold);
   }
@@ -14,7 +13,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(name: this._personDetail.name),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Column(
@@ -112,6 +111,9 @@ final String url =
     "https://ohsobserver.com/wp-content/uploads/2017/09/DrHendrickson-800x1200.jpg";
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
+  final String name;
+
+  CustomAppBar({this.name});
   @override
   Size get preferredSize => Size(double.infinity, 320);
 
@@ -146,7 +148,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
                       height: 16,
                     ),
                     Text(
-                      "Milan Short",
+                      name,
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     )
                   ],
