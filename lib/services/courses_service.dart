@@ -27,8 +27,8 @@ class CourseService {
       Course course = await _api.addCourseService(_user, _token);
       _courses.add(course);
     } catch (err) {
-      print('service addCourse ${err.toString()}');
       return Future.error(err.toString());
     }
   }
+
 }

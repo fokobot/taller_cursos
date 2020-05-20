@@ -1,10 +1,4 @@
-- *Listar Cursos* -> *Detalle Curso* -> *Detalle profesor*
-			-> *Lista estudiantes*   ->  Agregar estudiante
-					   -> *Detalle Estudiante*
-
-- Todos los estudiantes -> Detalle estudiante
-- Todos los profesores -> Detalle profesor
-
 - En el perfil, la parte de la foto toma mucho espacio
 - El título del AppBar toma mucho espacio 
 - Botones demasiado pequeños
+- Drawer Header

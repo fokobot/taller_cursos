@@ -15,4 +15,18 @@ class CourseDetailModel extends BaseModel {
     courseDetail = await _api.getCourse(user, token, courseId);
     setState(ViewState.Idle);
   }
+
+  Future addStudent(String user, String token, int courseId) async {
+    setState(ViewState.Busy);
+    try {
+      await _api.addStudent(user, token, courseId);
+      courseDetail = await _api.getCourse(user, token, courseId);
+      setState(ViewState.Idle);
+      return Future.value(true);
+    } catch (err) {
+      setState(ViewState.Idle);
+      return Future.error(err.toString());
+    }
+  }
+
 }

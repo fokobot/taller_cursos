@@ -84,7 +84,6 @@ class ListaCursos extends StatelessWidget {
         .getCourses(Provider.of<UserModel>(context).username,
             Provider.of<UserModel>(context).token)
         .catchError((error) async {
-      print("getCourses got error: " + error);
       await _buildDialog(context, 'Alert', 'Need to login');
       Provider.of<UserModel>(context, listen: false).signOut();
     });
@@ -100,7 +99,7 @@ class ListaCursos extends StatelessWidget {
   Widget floating(BuildContext context, HomeModel model) {
     return FloatingActionButton(
         onPressed: () => _onAdd(context, model),
-        tooltip: 'Add task',
+        tooltip: 'Añadir Curso',
         child: new Icon(Icons.add));
   }
 
@@ -108,8 +107,6 @@ class ListaCursos extends StatelessWidget {
     try {
       await model.addCourse();
     } catch (err) {
-      print('upsss ${err.toString()}');
-      await _buildDialog(context, 'Alert', 'Need to login');
       Provider.of<UserModel>(context, listen: false).signOut();
     }
   }

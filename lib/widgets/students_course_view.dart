@@ -23,6 +23,7 @@ class StudentsCourseView extends StatelessWidget {
           appBar: AppBar(
             title: Text("Estudiantes del Curso"),
           ),
+          floatingActionButton: floating(context, model),
           body: model.state == ViewState.Busy
               ? Center(child: CircularProgressIndicator())
               : Center(
@@ -38,5 +39,21 @@ class StudentsCourseView extends StatelessWidget {
                   },
                 )))),
     );
+  }
+
+  Widget floating(BuildContext context, CourseDetailModel model) {
+    return FloatingActionButton(
+        onPressed: () => _onAdd(context, model),
+        tooltip: 'Añadir Estudiante',
+        child: new Icon(Icons.add));
+  }
+
+  void _onAdd(BuildContext context, CourseDetailModel model) async {
+    try {
+      await model.addStudent(Provider.of<UserModel>(context).username,
+          Provider.of<UserModel>(context).token, this.courseId);
+    } catch (err) {
+      Provider.of<UserModel>(context, listen: false).signOut();
+    }
   }
 }

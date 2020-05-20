@@ -33,4 +33,5 @@ class HomeModel extends BaseModel {
       return Future.error(err.toString());
     }
   }
+
 }
