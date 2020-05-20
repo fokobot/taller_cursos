@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
 import 'package:taller_cursos/viewmodels/professor_detail_model.dart';
+import 'package:taller_cursos/widgets/person_detail_view.dart';
 
 import '../models/user.dart';
 
@@ -23,6 +24,14 @@ class ProfessorDetailView extends StatelessWidget {
             ),
             body: model.state == ViewState.Busy
                 ? Center(child: CircularProgressIndicator())
-                : Center(child: Text(model.professor.email))));
+                : Center(
+                    child: ProfilePage(
+                        name: model.professor.email,
+                        username: model.professor.username,
+                        email: model.professor.email,
+                        phone: model.professor.phone,
+                        city: model.professor.city,
+                        country: model.professor.country,
+                        birthdate: model.professor.birthdate))));
   }
 }

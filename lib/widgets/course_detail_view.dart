@@ -6,6 +6,7 @@ import 'package:taller_cursos/viewmodels/course_detail_model.dart';
 import 'package:taller_cursos/widgets/students_course_view.dart';
 
 import '../models/user.dart';
+import 'course_detail.dart';
 import 'professor_detail_view.dart';
 
 class CourseDetailView extends StatelessWidget {
@@ -25,7 +26,11 @@ class CourseDetailView extends StatelessWidget {
             ),
             body: model.state == ViewState.Busy
                 ? Center(child: CircularProgressIndicator())
-                : Center(
+                : CourseDetail(
+                    model.courseDetail.name,
+                    courseId,
+                    model.courseDetail.professor
+                        .id) /*Center(
                     child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
@@ -54,6 +59,7 @@ class CourseDetailView extends StatelessWidget {
                         },
                       )
                     ],
-                  ))));
+                  ))*/
+            ));
   }
 }
