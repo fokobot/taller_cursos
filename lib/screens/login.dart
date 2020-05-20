@@ -82,8 +82,9 @@ class _Login extends State<Login> {
     final loginButon = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
+      color: Colors.white,
       child: MaterialButton(
+        color: Colors.red,
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
@@ -131,7 +132,7 @@ class _Login extends State<Login> {
       ),
     );
     const spinkit = SpinKitSquareCircle(
-      color: Colors.blue,
+      color: Colors.red,
       size: 50.0,
     );
     return StatefulWrapper(
@@ -186,7 +187,7 @@ class _Login extends State<Login> {
                           child: Text("Registrarse",
                               style: TextStyle(
                                   decoration: TextDecoration.underline,
-                                  color: Colors.blue)),
+                                  color: Colors.red)),
                           onTap: () {
                             Navigator.push(
                               context,

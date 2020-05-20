@@ -44,9 +44,9 @@ class ListaCursos extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   children: <Widget>[
                     DrawerHeader(
-                      child: Text('Drawer Header'),
+                      child: Text('Cursos App'),
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.red,
                       ),
                     ),
                     ListTile(
