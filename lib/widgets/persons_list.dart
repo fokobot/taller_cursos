@@ -4,8 +4,10 @@ import 'package:taller_cursos/data/person.dart';
 class PersonsList extends StatelessWidget {
 
 
-  final List<Person> _items;
-  PersonsList(this._items);
+  final List<Person> items;
+  final Function onTap;
+
+  PersonsList({Key key, this.items, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +16,9 @@ class PersonsList extends StatelessWidget {
 
   Widget _list(BuildContext contex) {
     return ListView.builder(
-      itemCount: this._items.length,
+      itemCount: this.items.length,
       itemBuilder: (context, posicion) {
-        var element = this._items[posicion];
+        var element = this.items[posicion];
         return _item(context, element);
       },
     );
@@ -26,8 +28,7 @@ class PersonsList extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          print("Detalle");
-          //getDetail(context, element.id);
+          this.onTap(element);
         },
         child: Container(
           child: ListTile(

@@ -8,9 +8,9 @@ class PersonDetail {
   String phone;
   String city;
   String country;
-  String birthdate;
+  String birthday;
 
-  PersonDetail({this.id,this.name,this.username, this.email, this.phone, this.city, this.country, this.birthdate, this.course_id});
+  PersonDetail({this.id,this.name,this.username, this.email, this.phone, this.city, this.country, this.birthday, this.course_id});
 
   PersonDetail.initial()
       : id = 0,
@@ -20,7 +20,7 @@ class PersonDetail {
         phone = '',
         city = '',
         country = '',
-        birthdate = '',
+        birthday = '',
         course_id = 0;
 
 
@@ -31,7 +31,7 @@ class PersonDetail {
     email = json['email'];
     country = json['country'];
     city = json['city'];
-    birthdate = json['birthdate'];
+    birthday = json['birthday'];
     course_id = json['course_id'];
     phone = json['phone'];
   }

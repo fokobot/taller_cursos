@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:taller_cursos/data/person_detail.dart';
 
 class ProfilePage extends StatelessWidget {
-  final String name;
-  final String username;
-  final String email;
-  final String phone;
-  final String city;
-  final String country;
-  final String birthdate;
-  ProfilePage(
-      {this.name,
-      this.username,
-      this.email,
-      this.phone,
-      this.city,
-      this.country,
-      this.birthdate});
+  
+  final PersonDetail _personDetail;
+
+  ProfilePage(this._personDetail);
+      
   TextStyle _style() {
     return TextStyle(fontWeight: FontWeight.bold);
   }
@@ -34,7 +25,7 @@ class ProfilePage extends StatelessWidget {
               height: 4,
             ),
             Text(
-              "Milan Short",
+              this._personDetail.name,
               style: _style(),
             ),
             SizedBox(
@@ -45,7 +36,7 @@ class ProfilePage extends StatelessWidget {
               height: 4,
             ),
             Text(
-              "Milan Short",
+              this._personDetail.username,
             ),
             SizedBox(
               height: 16,
@@ -58,7 +49,7 @@ class ProfilePage extends StatelessWidget {
               height: 4,
             ),
             Text(
-              "3022386222",
+              this._personDetail.phone,
             ),
             SizedBox(
               height: 16,
@@ -70,7 +61,7 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               height: 4,
             ),
-            Text("milan@gmail.com"),
+            Text(this._personDetail.email),
             SizedBox(
               height: 16,
             ),
@@ -81,7 +72,7 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               height: 4,
             ),
-            Text("New York, USA"),
+            Text(this._personDetail.city),
             SizedBox(
               height: 16,
             ),
@@ -92,7 +83,7 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               height: 4,
             ),
-            Text("English, French"),
+            Text(this._personDetail.country),
             SizedBox(
               height: 16,
             ),
@@ -103,7 +94,7 @@ class ProfilePage extends StatelessWidget {
             SizedBox(
               height: 4,
             ),
-            Text("Employee"),
+            Text(this._personDetail.birthday),
             SizedBox(
               height: 16,
             ),

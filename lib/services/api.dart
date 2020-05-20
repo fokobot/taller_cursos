@@ -161,4 +161,23 @@ class Api {
     }
   }
 
+  Future<PersonDetail> getStudent(String username, String token, int studentId) async {
+    Uri uri = Uri.https(
+      "movil-api.herokuapp.com",
+      '$username/students/$studentId',
+    );
+    final http.Response response = await http.get(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer " + token,
+      },
+    );
+    if (response.statusCode == 200) {
+      return PersonDetail.fromJson(json.decode(response.body));
+    } else {
+      return Future.error(response.statusCode.toString());
+    }
+  }
+
 }
