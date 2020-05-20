@@ -142,7 +142,32 @@ class Api {
     }
   }
 
-  Future<PersonDetail> getProfessor(String username, String token, int professorId) async {
+  Future<List<Person>> getProfessors(String username, String token) async {
+    Uri uri = Uri.https(
+      "movil-api.herokuapp.com",
+      '$username/professors',
+    );
+    final http.Response response = await http.get(
+      uri,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        HttpHeaders.authorizationHeader: "Bearer " + token,
+      },
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      List<Person> professorsList = [];
+      for (Map i in data) {
+        professorsList.add(Person.fromJson(i));
+      }
+      return professorsList;
+    } else {
+      return Future.error(response.statusCode.toString());
+    }
+  }
+
+  Future<PersonDetail> getProfessor(
+      String username, String token, int professorId) async {
     Uri uri = Uri.https(
       "movil-api.herokuapp.com",
       '$username/professors/$professorId',
@@ -161,7 +186,8 @@ class Api {
     }
   }
 
-  Future<PersonDetail> getStudent(String username, String token, int studentId) async {
+  Future<PersonDetail> getStudent(
+      String username, String token, int studentId) async {
     Uri uri = Uri.https(
       "movil-api.herokuapp.com",
       '$username/students/$studentId',
@@ -179,5 +205,4 @@ class Api {
       return Future.error(response.statusCode.toString());
     }
   }
-
 }

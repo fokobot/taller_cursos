@@ -4,9 +4,11 @@ import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
 import 'package:taller_cursos/data/course.dart';
 import 'package:taller_cursos/viewmodels/home_model.dart';
+import 'package:taller_cursos/widgets/students_view.dart';
 
 import '../models/user.dart';
 import 'course_detail_view.dart';
+import 'professors_view.dart';
 
 class ListaCursos extends StatelessWidget {
   @override
@@ -14,32 +16,67 @@ class ListaCursos extends StatelessWidget {
     return BaseView<HomeModel>(
         onModelReady: (model) => getData(context, model),
         builder: (context, model, child) => Scaffold(
-            appBar: AppBar(
-              title: Text("Lista de Cursos"),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.exit_to_app),
-                  onPressed: () {
-                    Provider.of<UserModel>(context, listen: false)
-                        .signOut();
-                  },
+              appBar: AppBar(
+                title: Text("Lista de Cursos"),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.exit_to_app),
+                    onPressed: () {
+                      Provider.of<UserModel>(context, listen: false).signOut();
+                    },
+                  ),
+                ],
+              ),
+              floatingActionButton: floating(context, model),
+              body: model.state == ViewState.Busy
+                  ? Center(child: CircularProgressIndicator())
+                  : Center(
+                      child: model.courses == null
+                          ? Text('No data')
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Expanded(child: _list(context, model.courses)),
+                              ],
+                            )),
+              drawer: Drawer(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    DrawerHeader(
+                      child: Text('Drawer Header'),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    ListTile(
+                      title: Text('Cursos'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Profesores'),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => ProfessorsView()),
+                        );
+                      },
+                    ),
+                    ListTile(
+                      title: Text('Estudiantes'),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (context) => StudentsView()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            floatingActionButton: floating(context, model),
-            body: model.state == ViewState.Busy
-                ? Center(child: CircularProgressIndicator())
-                : Center(
-                    child: model.courses == null
-                        ? Text('No data')
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              Expanded(
-                                child:  _list(context, model.courses)
-                              ),
-                            ],
-                          ))));
+              ),
+            ));
   }
 
   void getData(BuildContext context, HomeModel model) async {
@@ -56,8 +93,7 @@ class ListaCursos extends StatelessWidget {
   void getDetail(BuildContext context, int courseId) async {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CourseDetailView(courseId: courseId)
-      ),
+          builder: (context) => CourseDetailView(courseId: courseId)),
     );
   }
 
@@ -107,7 +143,7 @@ class ListaCursos extends StatelessWidget {
     );
   }
 
-  Widget _item(BuildContext context, Course element){
+  Widget _item(BuildContext context, Course element) {
     return Card(
       child: InkWell(
         onTap: () {
@@ -116,11 +152,11 @@ class ListaCursos extends StatelessWidget {
         child: Container(
           child: ListTile(
             title: Text(element.name),
-            subtitle: Text("Profesor: ${element.professor}\n# de estudiantes: ${element.students}"),
+            subtitle: Text(
+                "Profesor: ${element.professor}\n# de estudiantes: ${element.students}"),
           ),
         ),
       ),
     );
   }
-  
 }

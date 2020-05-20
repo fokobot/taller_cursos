@@ -7,7 +7,6 @@ import 'package:taller_cursos/widgets/students_course_view.dart';
 
 import '../models/user.dart';
 import 'course_detail.dart';
-import 'professor_detail_view.dart';
 
 class CourseDetailView extends StatelessWidget {
   final int courseId;
@@ -26,40 +25,7 @@ class CourseDetailView extends StatelessWidget {
             ),
             body: model.state == ViewState.Busy
                 ? Center(child: CircularProgressIndicator())
-                : CourseDetail(
-                    model.courseDetail.name,
-                    courseId,
-                    model.courseDetail.professor
-                        .id) /*Center(
-                    child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Center(child: Text('${model.courseDetail.name}')),
-                      // Ver listado de estudiantes
-                      FlatButton(
-                        child: Text("Estudiantes"),
-                        onPressed: () => {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    StudentsCourseView(courseId: courseId)),
-                          )
-                        },
-                      ),
-                      // Ver listado de estudiantes
-                      FlatButton(
-                        child: Text("Detalle Profesor"),
-                        onPressed: () => {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => ProfessorDetailView(
-                                    professorId:
-                                        model.courseDetail.professor.id)),
-                          )
-                        },
-                      )
-                    ],
-                  ))*/
-            ));
+                : CourseDetail(model.courseDetail.name, courseId,
+                    model.courseDetail.professor.id)));
   }
 }
