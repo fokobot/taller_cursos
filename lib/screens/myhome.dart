@@ -14,9 +14,6 @@ class MyHome extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: Scaffold(
-          appBar: AppBar(
-            title: Text('Programación Móvil 2020'),
-          ),
           body: Center(
               child: Consumer<UserModel>(builder: (context, user, child) {
             return user.status ? ListaCursos() : Login();
