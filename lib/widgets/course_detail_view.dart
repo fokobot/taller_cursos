@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
 import 'package:taller_cursos/viewmodels/course_detail_model.dart';
-import 'package:taller_cursos/widgets/students_course_view.dart';
 
 import '../models/user.dart';
 import 'course_detail.dart';

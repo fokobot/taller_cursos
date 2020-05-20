@@ -1,7 +1,7 @@
 class PersonDetail {
 
   int id;
-  int course_id;
+  int courseId;
   String name;
   String username;
   String email;
@@ -10,7 +10,7 @@ class PersonDetail {
   String country;
   String birthday;
 
-  PersonDetail({this.id,this.name,this.username, this.email, this.phone, this.city, this.country, this.birthday, this.course_id});
+  PersonDetail({this.id,this.name,this.username, this.email, this.phone, this.city, this.country, this.birthday, this.courseId});
 
   PersonDetail.initial()
       : id = 0,
@@ -21,7 +21,7 @@ class PersonDetail {
         city = '',
         country = '',
         birthday = '',
-        course_id = 0;
+        courseId = 0;
 
 
   PersonDetail.fromJson(Map<String, dynamic> json) {
@@ -32,7 +32,7 @@ class PersonDetail {
     country = json['country'];
     city = json['city'];
     birthday = json['birthday'];
-    course_id = json['course_id'];
+    courseId = json['course_id'];
     phone = json['phone'];
   }
 

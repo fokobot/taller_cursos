@@ -15,7 +15,7 @@ class CourseDetail extends StatelessWidget {
       children: <Widget>[
         ClipPath(
           child: Container(color: Colors.black.withOpacity(0.8)),
-          clipper: getClipper(),
+          clipper: Clipper(),
         ),
         Positioned(
             width: 350.0,
@@ -102,11 +102,10 @@ class CourseDetail extends StatelessWidget {
   }
 }
 
-class getClipper extends CustomClipper<Path> {
+class Clipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = new Path();
-
     path.lineTo(0.0, size.height / 1.9);
     path.lineTo(size.width + 125, 0.0);
     path.close();
@@ -115,7 +114,6 @@ class getClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
-    // TODO: implement shouldReclip
     return true;
   }
 }

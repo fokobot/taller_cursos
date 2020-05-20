@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
-import 'package:taller_cursos/viewmodels/professor_detail_model.dart';
 import 'package:taller_cursos/viewmodels/student_detail_model.dart';
 import 'package:taller_cursos/widgets/person_detail_view.dart';
 
