@@ -1,7 +1,7 @@
-import 'package:taller_cursos/models/user.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:taller_cursos/services/auth_provider.dart';
 
 class Register extends StatelessWidget {
   final TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
@@ -85,7 +85,7 @@ class Register extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           if (_formKey.currentState.validate()) {
-            Provider.of<UserModel>(context, listen: false).signUp(
+            Provider.of<AuthProvider>(context, listen: false).signUp(
                 controllerEmail.value.text,
                 controllerPassword.value.text,
                 controllerUsername.value.text,

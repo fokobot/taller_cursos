@@ -2,12 +2,13 @@ import 'dart:developer' as developer;
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:taller_cursos/forms/register.dart';
-import 'package:taller_cursos/models/user.dart';
+import 'package:taller_cursos/services/auth_provider.dart';
 import 'package:taller_cursos/widgets/customdialog.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'register.dart';
 
 class StatefulWrapper extends StatefulWidget {
   final Function onInit;
@@ -87,12 +88,12 @@ class _Login extends State<Login> {
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
           if (_formKey.currentState.validate()) {
-            Provider.of<UserModel>(context, listen: false).changeLogging();
-            Provider.of<UserModel>(context, listen: false)
+            Provider.of<AuthProvider>(context, listen: false).changeLogging();
+            Provider.of<AuthProvider>(context, listen: false)
                 .signIn(
                     controllerEmail.value.text, controllerPassword.value.text, _value2)
                 .then((user) {
-              Provider.of<UserModel>(context, listen: false)
+              Provider.of<AuthProvider>(context, listen: false)
                   .setLoggedIn(user.username);
               CustomDialog(
                 title: "Exito!",
@@ -100,7 +101,7 @@ class _Login extends State<Login> {
                 buttonText: "Okay",
               ); //_buildDialog(context, "Exito!", "Done");
             }).catchError((error) {
-              Provider.of<UserModel>(context, listen: false).changeLogging();
+              Provider.of<AuthProvider>(context, listen: false).changeLogging();
               developer.log('Error de Login', name: 'DEBUG');
               final failedLogin = SnackBar(
                 content: Text('Error Login'),
@@ -138,7 +139,7 @@ class _Login extends State<Login> {
         final prefs = await SharedPreferences.getInstance();
         controllerEmail.text = prefs.getString('email');
         controllerPassword.text = prefs.getString('password');
-        Provider.of<UserModel>(context, listen: false).verifyStatus();
+        Provider.of<AuthProvider>(context, listen: false).verifyStatus();
       },
       child: Scaffold(
         body: Center(
@@ -175,7 +176,7 @@ class _Login extends State<Login> {
                       ),
                       //loginButon,
                       //spinkit,
-                      Consumer<UserModel>(builder: (context, user, child) {
+                      Consumer<AuthProvider>(builder: (context, user, child) {
                         return user.logging ? spinkit : loginButon;
                       }),
                       SizedBox(

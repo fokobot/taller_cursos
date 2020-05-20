@@ -20,6 +20,7 @@ class CourseDetailModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       await _api.addStudent(user, token, courseId);
+      // actualizar la información del curso
       courseDetail = await _api.getCourse(user, token, courseId);
       setState(ViewState.Idle);
       return Future.value(true);

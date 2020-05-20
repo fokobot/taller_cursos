@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
 import 'package:taller_cursos/data/course.dart';
+import 'package:taller_cursos/services/auth_provider.dart';
 import 'package:taller_cursos/viewmodels/home_model.dart';
 import 'package:taller_cursos/widgets/students_view.dart';
 
-import '../models/user.dart';
 import 'course_detail_view.dart';
 import 'professors_view.dart';
 
@@ -22,7 +22,7 @@ class ListaCursos extends StatelessWidget {
                   IconButton(
                     icon: Icon(Icons.exit_to_app),
                     onPressed: () {
-                      Provider.of<UserModel>(context, listen: false).signOut();
+                      Provider.of<AuthProvider>(context, listen: false).signOut();
                     },
                   ),
                 ],
@@ -81,11 +81,11 @@ class ListaCursos extends StatelessWidget {
 
   void getData(BuildContext context, HomeModel model) async {
     model
-        .getCourses(Provider.of<UserModel>(context).username,
-            Provider.of<UserModel>(context).token)
+        .getCourses(Provider.of<AuthProvider>(context).username,
+            Provider.of<AuthProvider>(context).token)
         .catchError((error) async {
       await _buildDialog(context, 'Alert', 'Need to login');
-      Provider.of<UserModel>(context, listen: false).signOut();
+      Provider.of<AuthProvider>(context, listen: false).signOut();
     });
   }
 
@@ -107,7 +107,7 @@ class ListaCursos extends StatelessWidget {
     try {
       await model.addCourse();
     } catch (err) {
-      Provider.of<UserModel>(context, listen: false).signOut();
+      Provider.of<AuthProvider>(context, listen: false).signOut();
     }
   }
 

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:taller_cursos/base/base_model.dart';
 import 'package:taller_cursos/base/base_view.dart';
+import 'package:taller_cursos/services/auth_provider.dart';
 import 'package:taller_cursos/viewmodels/professor_detail_model.dart';
 import 'package:taller_cursos/widgets/person_detail_view.dart';
 
-import '../models/user.dart';
 
 class ProfessorDetailView extends StatelessWidget {
   final int professorId;
@@ -15,8 +15,8 @@ class ProfessorDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<ProfessorDetailModel>(
         onModelReady: (model) => model.getProfessor(
-            Provider.of<UserModel>(context).username,
-            Provider.of<UserModel>(context).token,
+            Provider.of<AuthProvider>(context).username,
+            Provider.of<AuthProvider>(context).token,
             professorId),
         builder: (context, model, child) => Scaffold(
             appBar: AppBar(
